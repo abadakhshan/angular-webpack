@@ -88,15 +88,15 @@ module.exports = function makeWebpackConfig() {
   config.module = {
     rules: [
       // Support for .ts files.
-      {
-        test: /\.ts$/,
-        loaders: ['awesome-typescript-loader?' + atlOptions, 'angular2-template-loader', '@angularclass/hmr-loader'],
-        exclude: [isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
-      },
       // {
       //   test: /\.ts$/,
-      //   loader: '@ngtools/webpack'
+      //   loaders: ['awesome-typescript-loader?' + atlOptions, 'angular2-template-loader', '@angularclass/hmr-loader'],
+      //   exclude: [isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
       // },
+      {
+        test: /\.ts$/,
+        loader: '@ngtools/webpack'
+      },
       // copy those assets to output
       {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -234,11 +234,11 @@ module.exports = function makeWebpackConfig() {
 
   // Add build specific plugins
   if (isProd) {
-    // config.plugins.push(
-    //   new AotPlugin({
-    //     tsConfigPath: 'tsconfig-aot.json',
-    //     entryModule: path.resolve(__dirname, 'src/app/app.module') + '#AppModule'
-    //   }));
+    config.plugins.push(
+      new AotPlugin({
+        tsConfigPath: 'tsconfig-aot.json',
+        entryModule: path.resolve(__dirname, 'src/app/app.module') + '#AppModule'
+      }));
 
     config.plugins.push(
 
